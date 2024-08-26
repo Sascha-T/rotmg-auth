@@ -47,7 +47,18 @@ public class JavaSteamLoginProvider extends ClientMsgHandler implements SteamAcc
     String user_authToken;
 
     static final int hSteamPipe = new Random().nextInt(1000000) + 1;
+    SteamLoginStrategy strategy;
+    int timeoutSeconds;
     public JavaSteamLoginProvider(SteamLoginStrategy strategy, int timeoutSeconds) throws LoginException, InvalidProtocolBufferException {
+        this.strategy = strategy;
+        this.timeoutSeconds = timeoutSeconds;
+    }
+
+    boolean performed = false;
+
+    public void init() throws LoginException {
+        if(performed)
+            return;
         callbackManager.subscribe(LoggedOnCallback.class, this::loggedOn);
         callbackManager.subscribe(GameConnectTokensCallback.class, this::gcTokens);
         callbackManager.subscribe(ConnectedCallback.class, (c) -> {
@@ -145,6 +156,7 @@ public class JavaSteamLoginProvider extends ClientMsgHandler implements SteamAcc
         }
 
         steamClient.disconnect();
+        performed = true;
     }
 
 
@@ -162,11 +174,13 @@ public class JavaSteamLoginProvider extends ClientMsgHandler implements SteamAcc
 
     @Override
     public String getAuthSessionTicket() throws LoginException {
+        init();
         return user_authToken;
     }
 
     @Override
     public String getSteamID() throws LoginException {
+        init();
         return user_steamId;
     }
     @Override
