@@ -11,6 +11,27 @@ Deca based login is included in the main library. \
 
 
 ## Repository
+This package is published to the GitHub Packages registry for Gradle, which requires you to [authenticate](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-gradle-registry#using-a-published-package).
+
+```groovy
+repositories {
+    maven {
+        url = uri("https://maven.pkg.github.com/Sascha-T/rotmg-auth")
+        credentials {
+            username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+            password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+        }
+   }
+}
+dependencies {
+    implementation("de.saschat.rotmg:rotmg-auth:VERSION") {
+        capabilities {
+            requireCapability("de.saschat.rotmg:rotmg-auth-javasteam")
+            requireCapability("de.saschat.rotmg:rotmg-auth-steamworks4j")
+        }
+    }
+}
+```
 
 ## Code Examples
 
