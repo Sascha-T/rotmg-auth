@@ -2,6 +2,7 @@ plugins {
     id("java")
     id("java-library")
     id("org.gradlex.extra-java-module-info") version "1.8"
+    id("maven-publish")
 }
 
 
@@ -55,5 +56,23 @@ dependencies {
 extraJavaModuleInfo {
     automaticModule("com.code-disaster.steamworks4j:steamworks4j", "steamworks4j")
     failOnMissingModuleInfo.set(false)
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/OWNER/REPOSITORY")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+            }
+        }
+    }
+    publications {
+        rotmgauth(MavenPublication) {
+            from(components.java)
+        }
+    }
 }
 

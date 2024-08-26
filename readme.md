@@ -11,7 +11,6 @@ Deca based login is included in the main library. \
 
 
 ## Repository
-Refer to [JitPack.](https://jitpack.io/#Sascha-T/rotmg-auth)
 
 ## Code Examples
 
