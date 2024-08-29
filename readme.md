@@ -24,14 +24,15 @@ repositories {
    }
 }
 dependencies {
-    implementation("de.saschat.rotmg:rotmg-auth:1.0-SNAPSHOT") {
+    implementation("de.saschat.rotmg:rotmg-auth:1.2-SNAPSHOT")
+    implementation("de.saschat.rotmg:rotmg-auth:1.2-SNAPSHOT") {
         capabilities {
-            requireCapability("de.saschat.rotmg:rotmg-auth-steamworks4j:1.0-SNAPSHOT")
+            requireCapability("de.saschat.rotmg:rotmg-auth-steamworks4j:1.2-SNAPSHOT")
         }
     }
-    implementation("de.saschat.rotmg:rotmg-auth:1.0-SNAPSHOT") {
+    implementation("de.saschat.rotmg:rotmg-auth:1.2-SNAPSHOT") {
         capabilities {
-            requireCapability("de.saschat.rotmg:rotmg-auth-javasteam:1.0-SNAPSHOT")
+            requireCapability("de.saschat.rotmg:rotmg-auth-javasteam:1.2-SNAPSHOT")
         }
     }
 }
