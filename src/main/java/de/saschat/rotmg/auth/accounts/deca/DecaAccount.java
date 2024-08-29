@@ -1,4 +1,4 @@
-package de.saschat.rotmg.auth.accounts.deka;
+package de.saschat.rotmg.auth.accounts.deca;
 
 import de.saschat.rotmg.auth.RealmAuth;
 import de.saschat.rotmg.auth.accounts.RealmAccount;

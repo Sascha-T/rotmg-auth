@@ -1,10 +1,9 @@
 package de.saschat.rotmg.auth;
 
-import de.saschat.rotmg.auth.accounts.deka.DecaAccount;
+import de.saschat.rotmg.auth.accounts.deca.DecaAccount;
 import de.saschat.rotmg.auth.accounts.steam.SteamAccount;
 import de.saschat.rotmg.auth.accounts.steam.SteamAccountLoginProvider;
 import de.saschat.rotmg.auth.cache.CacheProcessor;
-import de.saschat.rotmg.auth.cache.FileCacheProcessor;
 import de.saschat.rotmg.auth.exceptions.LoginException;
 import de.saschat.rotmg.auth.exceptions.RequestException;
 
