@@ -37,7 +37,7 @@ dependencies {
 
 ### Enable caching
 ```java
-    RealmAuth.setCachingSettings(new CachingSettings(new File("cacheFolder")));
+    RealmAuth.setCachingSettings(new FileCacheProcessor(new FileCacheProcessor.CachingSettings(new File("cacheFolder"))));
 ```
 This will automatically store previously acquired access tokens and machine auth information if using javasteam.
  

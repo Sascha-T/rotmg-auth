@@ -3,9 +3,10 @@ package de.saschat.rotmg.auth;
 import de.saschat.rotmg.auth.accounts.deka.DecaAccount;
 import de.saschat.rotmg.auth.accounts.steam.SteamAccount;
 import de.saschat.rotmg.auth.accounts.steam.SteamAccountLoginProvider;
+import de.saschat.rotmg.auth.cache.CacheProcessor;
+import de.saschat.rotmg.auth.cache.FileCacheProcessor;
 import de.saschat.rotmg.auth.exceptions.LoginException;
 import de.saschat.rotmg.auth.exceptions.RequestException;
-import de.saschat.rotmg.auth.util.CachingSettings;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -38,7 +39,7 @@ public class RealmAuth {
     public static SteamAccount login(SteamAccountLoginProvider provider) throws LoginException {
         return new SteamAccount(provider);
     }
-    public static void setCachingSettings(CachingSettings settings) {
-        CachingSettings.CURRENT = settings;
+    public static void setCachingSettings(CacheProcessor settings) {
+        CacheProcessor.CURRENT = settings;
     }
 }

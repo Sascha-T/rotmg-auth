@@ -1,11 +1,8 @@
 package de.saschat.rotmg.auth.steamworks4j;
 
 import com.codedisaster.steamworks.*;
-import de.saschat.rotmg.auth.RealmAuth;
-import de.saschat.rotmg.auth.accounts.steam.SteamAccount;
 import de.saschat.rotmg.auth.accounts.steam.SteamAccountLoginProvider;
 import de.saschat.rotmg.auth.exceptions.LoginException;
-import de.saschat.rotmg.auth.util.CachingSettings;
 
 import java.io.File;
 import java.io.FileWriter;

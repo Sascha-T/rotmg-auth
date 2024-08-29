@@ -1,10 +1,11 @@
 package de.saschat.rotmg.auth.accounts;
 
 import com.google.gson.reflect.TypeToken;
+import de.saschat.rotmg.auth.cache.CacheProcessor;
+import de.saschat.rotmg.auth.cache.FileCacheProcessor;
 import de.saschat.rotmg.auth.exceptions.LoginException;
 import de.saschat.rotmg.auth.exceptions.RequestException;
 import de.saschat.rotmg.auth.exceptions.XMLException;
-import de.saschat.rotmg.auth.util.CachingSettings;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -24,34 +25,16 @@ public abstract class RealmAccount {
     private final String cacheId;
     protected RealmAccount(String cacheId) {
         this.cacheId = cacheId;
-        if (CachingSettings.CURRENT != null) {
-            /* Load from cache... */
-            CachingSettings.CURRENT.folder().mkdirs();
-            File cacheFile = new File(CachingSettings.CURRENT.folder(), cacheId);
-            if (!cacheFile.exists())
-                return;
-            try {
-                // trust me bro
-                verifyData = (List<VerifyData>) CachingSettings.GSON.fromJson(new FileReader(cacheFile), TypeToken.getParameterized(LinkedList.class, VerifyData.class));
-            } catch (FileNotFoundException e) {
-            }
+        String data = CacheProcessor.retrieveIfPossible(cacheId);
+        if(data != null) {
+            verifyData.addAll(new LinkedList<>(
+                (Collection<? extends VerifyData>)CacheProcessor.GSON.fromJson(data, TypeToken.getParameterized(LinkedList.class, VerifyData.class))
+            ));
         }
     }
 
     private void $cache() {
-
-        if (CachingSettings.CURRENT != null) {
-            /* Load from cache... */
-            File cacheFile = new File(CachingSettings.CURRENT.folder(), cacheId);
-
-            try {
-                FileWriter writer = new FileWriter(cacheFile);
-                CachingSettings.GSON.toJson(verifyData, writer);
-                writer.flush();
-                writer.close();
-            } catch (IOException e) {
-            }
-        }
+        CacheProcessor.storeIfPossible(cacheId, CacheProcessor.GSON.toJson(verifyData));
     }
 
     protected List<VerifyData> verifyData = new LinkedList();

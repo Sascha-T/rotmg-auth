@@ -2,12 +2,8 @@ package de.saschat.rotmg.auth.javasteam;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
-import de.saschat.rotmg.auth.RealmAuth;
-import de.saschat.rotmg.auth.accounts.steam.SteamAccount;
 import de.saschat.rotmg.auth.accounts.steam.SteamAccountLoginProvider;
 import de.saschat.rotmg.auth.exceptions.LoginException;
-import de.saschat.rotmg.auth.javasteam.strategies.PasswordLoginStrategy;
-import de.saschat.rotmg.auth.util.CachingSettings;
 import in.dragonbra.javasteam.base.ClientMsgProtobuf;
 import in.dragonbra.javasteam.base.IPacketMsg;
 import in.dragonbra.javasteam.enums.EMsg;
@@ -23,7 +19,6 @@ import in.dragonbra.javasteam.steam.steamclient.callbackmgr.CallbackManager;
 import in.dragonbra.javasteam.steam.steamclient.callbacks.ConnectedCallback;
 import in.dragonbra.javasteam.types.JobID;
 
-import java.io.File;
 import java.net.InetAddress;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

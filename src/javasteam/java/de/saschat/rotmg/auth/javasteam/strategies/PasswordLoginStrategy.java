@@ -1,7 +1,8 @@
 package de.saschat.rotmg.auth.javasteam.strategies;
 
+import de.saschat.rotmg.auth.cache.CacheProcessor;
+import de.saschat.rotmg.auth.cache.FileCacheProcessor;
 import de.saschat.rotmg.auth.javasteam.SteamLoginStrategy;
-import de.saschat.rotmg.auth.util.CachingSettings;
 import in.dragonbra.javasteam.steam.authentication.*;
 import in.dragonbra.javasteam.steam.handlers.steamunifiedmessages.SteamUnifiedMessages;
 import in.dragonbra.javasteam.steam.handlers.steamuser.LogOnDetails;
@@ -29,7 +30,6 @@ public class PasswordLoginStrategy implements SteamLoginStrategy {
         details.username = username;
         details.password = password;
 
-        details.guardData = loadToken();
         details.persistentSession = true;
         details.authenticator = new UserConsoleAuthenticator();
 
@@ -63,28 +63,11 @@ public class PasswordLoginStrategy implements SteamLoginStrategy {
     }
 
     private void saveToken(String newGuardData) {
-        if (CachingSettings.CURRENT != null) {
-            try {
-                CachingSettings.CURRENT.folder().mkdirs();
-                File writeTo = new File(CachingSettings.CURRENT.folder(), getCacheIdentifier(username));
-                FileWriter writer = new FileWriter(writeTo);
-                writer.write(newGuardData);
-                writer.flush();
-                writer.close();
-            } catch (Throwable e) {}
-        }
+        CacheProcessor.storeIfPossible(getCacheIdentifier(username), newGuardData);
     }
 
     private String loadToken() {
-        try {
-            if (CachingSettings.CURRENT != null) {
-                CachingSettings.CURRENT.folder().mkdirs();
-                File readFrom = new File(CachingSettings.CURRENT.folder(), getCacheIdentifier(username));
-                FileInputStream reader = new FileInputStream(readFrom);
-                return new String(reader.readAllBytes());
-            }
-        } catch (Throwable e) {}
-        return null;
+        return CacheProcessor.retrieveIfPossible(getCacheIdentifier(username));
     }
 
     private static String getCacheIdentifier(String username) {
