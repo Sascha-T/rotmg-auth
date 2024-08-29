@@ -55,6 +55,7 @@ dependencies {
 
 extraJavaModuleInfo {
     automaticModule("com.code-disaster.steamworks4j:steamworks4j", "steamworks4j")
+    automaticModule("in.dragonbra:javasteam", "javasteam")
     failOnMissingModuleInfo.set(false)
 }
 
