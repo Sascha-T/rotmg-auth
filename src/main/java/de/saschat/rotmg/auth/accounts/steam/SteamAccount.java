@@ -31,6 +31,11 @@ public class SteamAccount extends RealmAccount {
         this.provider = steam;
     }
 
+    @Override
+    public String getGUID() throws LoginException {
+        return "steamworks:" + provider.getSteamID();
+    }
+
     private static Node $xml(Document doc, String tag) throws XMLException {
         NodeList x = doc.getElementsByTagName(tag);
         if (x.getLength() == 0)

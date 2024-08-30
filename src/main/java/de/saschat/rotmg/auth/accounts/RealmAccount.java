@@ -23,15 +23,18 @@ import java.util.*;
 
 public abstract class RealmAccount {
     private final String cacheId;
+
     protected RealmAccount(String cacheId) {
         this.cacheId = cacheId;
         String data = CacheProcessor.retrieveIfPossible(cacheId);
-        if(data != null) {
+        if (data != null) {
             verifyData.addAll(new LinkedList<>(
-                (Collection<? extends VerifyData>)CacheProcessor.GSON.fromJson(data, TypeToken.getParameterized(LinkedList.class, VerifyData.class))
+                (Collection<? extends VerifyData>) CacheProcessor.GSON.fromJson(data, TypeToken.getParameterized(LinkedList.class, VerifyData.class))
             ));
         }
     }
+
+    public abstract String getGUID() throws LoginException;
 
     private void $cache() {
         CacheProcessor.storeIfPossible(cacheId, CacheProcessor.GSON.toJson(verifyData));
@@ -74,6 +77,7 @@ public abstract class RealmAccount {
     public void clearCache() {
         verifyData.clear();
     }
+
     protected final VerifyData getFreshVerification() throws RequestException, XMLException, LoginException {
         try {
             String data = getRawVerification();

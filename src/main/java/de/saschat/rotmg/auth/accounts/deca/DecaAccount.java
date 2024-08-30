@@ -2,6 +2,7 @@ package de.saschat.rotmg.auth.accounts.deca;
 
 import de.saschat.rotmg.auth.RealmAuth;
 import de.saschat.rotmg.auth.accounts.RealmAccount;
+import de.saschat.rotmg.auth.exceptions.LoginException;
 import de.saschat.rotmg.auth.exceptions.RequestException;
 import de.saschat.rotmg.auth.util.Constants;
 
@@ -20,6 +21,11 @@ public class DecaAccount extends RealmAccount {
         super(getCacheIdentifier(username, password));
         this.username = username;
         this.password = password;
+    }
+
+    @Override
+    public String getGUID() throws LoginException {
+        return username;
     }
 
     @Override
