@@ -127,7 +127,6 @@ public class JavaSteamLoginProvider extends ClientMsgHandler implements SteamAcc
 
         byte[] sessionTicket = new byte[52];
         System.arraycopy(authSessionTicket, 0, sessionTicket, 0, 52);
-
         CRC32 ticketCrc = new CRC32();
         ticketCrc.update(sessionTicket);
 

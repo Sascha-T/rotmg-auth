@@ -1,13 +1,16 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id("java")
     id("java-library")
-    id("org.gradlex.extra-java-module-info") version "1.8"
+    // id("org.gradlex.extra-java-module-info") version "1.8"
     id("maven-publish")
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 
 group = "de.saschat.rotmg"
-version = "1.4"
+version = "1.5"
 
 repositories {
     mavenCentral()
@@ -39,25 +42,27 @@ java {
     }
 }
 
+
 dependencies {
 
     "steamworks4jImplementation"(project(":"))
-    "steamworks4jImplementation"("com.code-disaster.steamworks4j:steamworks4j:1.9.0")
+    "steamworks4jCompileOnly"("com.code-disaster.steamworks4j:steamworks4j:1.9.0")
 
     "javasteamImplementation"(project(":"))
-    "javasteamImplementation"("in.dragonbra:javasteam:1.4.0")// https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk18on
-    "javasteamImplementation"("org.bouncycastle:bcprov-jdk18on:1.78.1")
-    "javasteamImplementation"("com.google.protobuf:protobuf-java:4.26.1")
+    "javasteamCompileOnly"("in.dragonbra:javasteam:1.4.0")// https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk18on
+    "javasteamCompileOnly"("org.bouncycastle:bcprov-jdk18on:1.78.1")
+    "javasteamCompileOnly"("com.google.protobuf:protobuf-java:4.26.1")
 
 
     implementation("com.google.code.gson:gson:2.11.0")
 }
 
-extraJavaModuleInfo {
+/*extraJavaModuleInfo {
     automaticModule("com.code-disaster.steamworks4j:steamworks4j", "steamworks4j")
     automaticModule("in.dragonbra:javasteam", "javasteam")
     failOnMissingModuleInfo.set(false)
-}
+}*/
+
 
 publishing {
     repositories {
@@ -76,3 +81,33 @@ publishing {
         }
     }
 }
+
+/*shadowJar {
+    relocate("com.code-disaster.steamworks4j", "de.saschat.rotmg.auth.shadow.steamworks4j");
+    relocate("in.dragonbra.javasteam", "de.saschat.rotmg.auth.shadow.javasteam");
+
+}*/
+/*configurations.forEach({println(it.name); println(it.isCanBeResolved)})*/
+
+/*configurations["javasteamCompileClasspath"].forEach({ println(it) })*/
+
+/*tasks {
+    val shadowSteamworks4j by registering(ShadowJar::class) {
+        from(sourceSets["steamworks4j"].output)
+        archiveClassifier.set("steamworks4j")
+
+        for(file in project.configurations["steamworks4jCompileClasspath"]) {
+            if(!file.endsWith("rotmg-auth-$version.jar"))
+                from(file);
+        }
+    }
+    val shadowJavasteam by registering(ShadowJar::class) {
+        from(sourceSets["javasteam"].output)
+        archiveClassifier.set("javasteam")
+
+        for(file in project.configurations["javasteamCompileClasspath"]) {
+            if(!file.endsWith("rotmg-auth-$version.jar"))
+                from(file);
+        }
+    }
+}*/

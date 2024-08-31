@@ -62,8 +62,6 @@ public class SteamAccount extends RealmAccount {
             conn.getOutputStream().write(loginData.getBytes(StandardCharsets.UTF_8));
             byte[] data = conn.getInputStream().readAllBytes();
 
-            System.out.println(new String(data));
-
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document doc = builder.parse(new ByteArrayInputStream(data)); // java stdlib will make me blow my brains out someday... (too lazy to get good)
 
