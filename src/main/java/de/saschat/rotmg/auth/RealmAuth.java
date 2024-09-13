@@ -19,19 +19,21 @@ public class RealmAuth {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
 
-            String text = "";
-            text += WMIC.getValue("path Win32_BIOS", "SerialNumber");
-            text += WMIC.getValue("baseboard", "SerialNumber");
-            if (text.equals(""))
-                text += "None0";
-            text += WMIC.getValue("Win32_OperatingSystem", "SerialNumber");
+            StringBuilder text = new StringBuilder();
+            text.append(WMIC.getValue("baseboard", "SerialNumber"));
+            text.append(WMIC.getValue("path Win32_BIOS", "SerialNumber"));
+            if (text.isEmpty())
+                text.append("None0");
+            text.append(WMIC.getValue("path Win32_OperatingSystem", "SerialNumber"));
 
-            byte[] digest = md.digest(text.getBytes(StandardCharsets.UTF_8));
-            String hash = "";
+            System.out.println(text);
+
+            byte[] digest = md.digest(text.toString().getBytes(StandardCharsets.UTF_8));
+            StringBuilder hash = new StringBuilder();
             for(byte a : digest)
-                hash += String.format("%02x", a);
+                hash.append(String.format("%02x", a));
 
-            return hash;
+            return hash.toString();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
