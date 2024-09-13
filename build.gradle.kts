@@ -10,7 +10,7 @@ plugins {
 
 
 group = "de.saschat.rotmg"
-version = "1.5"
+version = "2.0"
 
 repositories {
     mavenCentral()
